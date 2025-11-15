@@ -116,12 +116,35 @@ export const userApi = createApi({
                     return error.data?.message || "Google login failed";
                 },
             }),
+
+            verifyOtp: builder.mutation<{ message: string; result: IUser }, { email?: string; phone?: string; otp: string }>({
+                query: (data) => ({
+                    url: "/verify-otp",
+                    method: "POST",
+                    body: data,
+                }),
+                transformResponse: (data: { message: string; result: IUser }) => {
+                    localStorage.setItem("user", JSON.stringify(data.result));
+                    return data;
+                },
+                transformErrorResponse: (error: { status: number; data: { message: string } }) => error.data?.message,
+            }),
+            sendOtp: builder.mutation<{ message: string }, { email?: string; phone?: string }>({
+                query: (data) => ({
+                    url: "/send-otp",
+                    method: "POST",
+                    body: data,
+                }),
+                transformResponse: (data: { message: string }) => data,
+                transformErrorResponse: (error: { status: number; data: { message: string } }) => error.data?.message,
+            }),
         }
     }
 })
 export const {
     useRegisterUserMutation,
     useSignInUserMutation,
-    useSignOutUserMutation,
+    useSignOutUserMutation, useSendOtpMutation,
+    useVerifyOtpMutation,
     useContinueWithGoogleUserMutation
 } = userApi

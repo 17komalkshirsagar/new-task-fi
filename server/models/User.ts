@@ -11,6 +11,8 @@ export interface IUser extends Document {
     status: 'active' | 'inactive';
     sessionToken: string | null;
     token?: string;
+    otp?: string | null;
+    otpExpiresAt?: Date | null;
 }
 const userSchema = new Schema<IUser>({
     firstName: { type: String, required: true, trim: true },
@@ -19,6 +21,8 @@ const userSchema = new Schema<IUser>({
     phone: { type: Number, required: true, unique: true, trim: true },
     password: { type: String, required: true, trim: true },
     profile: { type: String, trim: true },
+    otp: { type: String, default: null },
+    otpExpiresAt: { type: Date, default: null },
     role: {
         type: String,
         enum: ["user"],

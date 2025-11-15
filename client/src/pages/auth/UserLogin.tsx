@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useSignInUserMutation } from "../../redux/apis/user.api";
+import { useSendOtpMutation, useSignInUserMutation, useVerifyOtpMutation } from "../../redux/apis/user.api";
 import { setUser } from "../../redux/slices/auth.slice";
 import { toast } from "sonner";
 type LoginMethod = 'password' | 'email-otp' | 'mobile-otp';
@@ -9,6 +9,9 @@ const UserLogin = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [signInUser, { isLoading }] = useSignInUserMutation();
+    const [sendOtp] = useSendOtpMutation();
+    const [verifyOtp] = useVerifyOtpMutation();
+
     const [loginMethod, setLoginMethod] = useState<LoginMethod>('password');
     const [otpStep, setOtpStep] = useState<'send' | 'verify'>('send');
     const [email, setEmail] = useState("");
@@ -40,28 +43,67 @@ const UserLogin = () => {
             toast.error(errorMessage);
         }
     };
+    // const handleSendOTP = async (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     setError("");
+    //     try {
+    //         // TODO: API call to send OTP
+    //         await new Promise(resolve => setTimeout(resolve, 1000));
+    //         setOtpStep('verify');
+    //     } catch (err: any) {
+    //         setError("Failed to send OTP. Please try again.");
+    //     }
+    // };
+    // const handleVerifyOTP = async (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     setError("");
+    //     try {
+    //         // TODO: API call to verify OTP and login
+    //         await new Promise(resolve => setTimeout(resolve, 1000));
+    //         navigate("/");
+    //     } catch (err: any) {
+    //         setError("Invalid OTP. Please try again.");
+    //     }
+    // };
+
+
     const handleSendOTP = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
         try {
-            // TODO: API call to send OTP
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await sendOtp(loginMethod === "email-otp" ? { email } : { phone: mobile }).unwrap();
             setOtpStep('verify');
+            toast.success("OTP sent successfully!");
         } catch (err: any) {
-            setError("Failed to send OTP. Please try again.");
+            setError(err || "Failed to send OTP. Please try again.");
+            toast.error(err || "Failed to send OTP");
         }
     };
+
     const handleVerifyOTP = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
         try {
-            // TODO: API call to verify OTP and login
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            navigate("/");
+            const result = await verifyOtp(
+                loginMethod === "email-otp" ? { email, otp } : { phone: mobile, otp }
+            ).unwrap();
+
+            toast.success("Login successful!");
+            dispatch(setUser({
+                _id: result.result._id,
+                name: result.result.firstName + " " + result.result.lastName,
+                email: result.result.email,
+                mobile: result.result.phone?.toString(),
+                role: result.result.role || "user"
+            }));
+
+            navigate("/products");
         } catch (err: any) {
-            setError("Invalid OTP. Please try again.");
+            setError(err || "Invalid OTP. Please try again.");
+            toast.error(err || "Invalid OTP");
         }
     };
+
     const handleResendOTP = async () => {
         setError("");
         try {
@@ -75,7 +117,7 @@ const UserLogin = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-50 via-white to-cyan-50 px-4 py-12">
             <div className="w-full max-w-md">
-                {}
+                { }
                 <div className="text-center mb-8">
                     <div className="inline-block">
                         <Link to="/" className="text-3xl font-bold text-[#008080] hover:text-[#006666]">
@@ -85,9 +127,9 @@ const UserLogin = () => {
                     <h1 className="text-3xl font-bold text-gray-900 mb-2 mt-4">Welcome Back</h1>
                     <p className="text-gray-600">Sign in to continue shopping</p>
                 </div>
-                {}
+                { }
                 <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
-                    {}
+                    { }
                     <div className="grid grid-cols-3 gap-2 mb-6 bg-gray-100 p-1 rounded-lg">
                         <button
                             type="button"
@@ -96,11 +138,10 @@ const UserLogin = () => {
                                 setOtpStep('send');
                                 setError("");
                             }}
-                            className={`py-2 px-3 rounded-md text-sm font-medium transition-all ${
-                                loginMethod === 'password'
-                                    ? 'bg-white text-[#008080] shadow-sm'
-                                    : 'text-gray-600 hover:text-gray-900'
-                            }`}
+                            className={`py-2 px-3 rounded-md text-sm font-medium transition-all ${loginMethod === 'password'
+                                ? 'bg-white text-[#008080] shadow-sm'
+                                : 'text-gray-600 hover:text-gray-900'
+                                }`}
                         >
                             Password
                         </button>
@@ -111,11 +152,10 @@ const UserLogin = () => {
                                 setOtpStep('send');
                                 setError("");
                             }}
-                            className={`py-2 px-3 rounded-md text-sm font-medium transition-all ${
-                                loginMethod === 'email-otp'
-                                    ? 'bg-white text-[#008080] shadow-sm'
-                                    : 'text-gray-600 hover:text-gray-900'
-                            }`}
+                            className={`py-2 px-3 rounded-md text-sm font-medium transition-all ${loginMethod === 'email-otp'
+                                ? 'bg-white text-[#008080] shadow-sm'
+                                : 'text-gray-600 hover:text-gray-900'
+                                }`}
                         >
                             Email OTP
                         </button>
@@ -126,11 +166,10 @@ const UserLogin = () => {
                                 setOtpStep('send');
                                 setError("");
                             }}
-                            className={`py-2 px-3 rounded-md text-sm font-medium transition-all ${
-                                loginMethod === 'mobile-otp'
-                                    ? 'bg-white text-[#008080] shadow-sm'
-                                    : 'text-gray-600 hover:text-gray-900'
-                            }`}
+                            className={`py-2 px-3 rounded-md text-sm font-medium transition-all ${loginMethod === 'mobile-otp'
+                                ? 'bg-white text-[#008080] shadow-sm'
+                                : 'text-gray-600 hover:text-gray-900'
+                                }`}
                         >
                             Mobile OTP
                         </button>
@@ -141,10 +180,10 @@ const UserLogin = () => {
                             {error}
                         </div>
                     )}
-                    {}
+                    { }
                     {loginMethod === 'password' && (
                         <form onSubmit={handlePasswordLogin} className="space-y-6">
-                            {}
+                            { }
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                                     Email Address
@@ -159,7 +198,7 @@ const UserLogin = () => {
                                     placeholder="you@example.com"
                                 />
                             </div>
-                            {}
+                            { }
                             <div>
                                 <div className="flex items-center justify-between mb-2">
                                     <label htmlFor="password" className="block text-sm font-medium text-gray-700">
@@ -197,7 +236,7 @@ const UserLogin = () => {
                                     </button>
                                 </div>
                             </div>
-                            {}
+                            { }
                             <button
                                 type="submit"
                                 disabled={isLoading}
@@ -214,7 +253,7 @@ const UserLogin = () => {
                             </button>
                         </form>
                     )}
-                    {}
+                    { }
                     {loginMethod === 'email-otp' && (
                         <>
                             {otpStep === 'send' ? (
@@ -302,7 +341,7 @@ const UserLogin = () => {
                             )}
                         </>
                     )}
-                    {}
+                    { }
                     {loginMethod === 'mobile-otp' && (
                         <>
                             {otpStep === 'send' ? (
@@ -398,7 +437,7 @@ const UserLogin = () => {
                             )}
                         </>
                     )}
-                    {}
+                    { }
                     <div className="mt-6">
                         <div className="relative">
                             <div className="absolute inset-0 flex items-center">
@@ -409,7 +448,7 @@ const UserLogin = () => {
                             </div>
                         </div>
                     </div>
-                    {}
+                    { }
                     <div className="mt-6">
                         <Link
                             to="/register"
@@ -419,7 +458,7 @@ const UserLogin = () => {
                         </Link>
                     </div>
                 </div>
-                {}
+                { }
                 <div className="mt-6 text-center">
                     <Link to="/" className="text-gray-600 hover:text-gray-900 text-sm flex items-center justify-center gap-1">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

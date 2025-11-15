@@ -6,5 +6,7 @@ userRouter
     .post("/register", userController.registerUser)
     .post("/sign-in", userController.signInUser)
     .post("/sign-out", protectedRoute, userController.signOutUser)
-    .post("/continue-with-google", userController.continueWithGoogleUser);
-export default userRouter;
+    .post("/continue-with-google", userController.continueWithGoogleUser)
+    .post("/send-otp", userController.sendOtp)
+    .post("/verify-otp", userController.verifyOtp)
+export default userRouter;

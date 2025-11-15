@@ -8,6 +8,7 @@ import { customValidator } from "../utils/validator";
 import { userRegisterRules, signInRules } from "../rules/auth.rules";
 import { generateToken } from "../utils/generateToken";
 import { User, IUser } from "../models/User";
+import nodemailer from "nodemailer";
 dotenv.config({});
 export const registerUser = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     const { firstName, lastName, email, phone, password, confirmPassword } = req.body;
@@ -133,4 +134,75 @@ export const continueWithGoogleUser = asyncHandler(async (req: Request, res: Res
             token,
         },
     });
-});
+});
+
+
+
+
+
+export const sendOtp = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    const { email, phone } = req.body;
+    const user = await User.findOne({ $or: [{ email }, { phone }] });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
+
+    user.otp = otp;
+    user.otpExpiresAt = otpExpiry;
+    await user.save();
+
+    if (email) {
+
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
+
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: "Your OTP for Login",
+            text: `Your OTP is ${otp}. It will expire in 5 minutes.`
+        });
+    }
+
+    // Optionally, send OTP via SMS for mobile
+    res.status(200).json({ message: "OTP sent successfully" });
+});
+
+
+export const verifyOtp = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    const { email, phone, otp } = req.body;
+    const user = await User.findOne({ $or: [{ email }, { phone }] });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    if (user.otp !== otp || !user.otpExpiresAt || user.otpExpiresAt < new Date()) {
+        return res.status(400).json({ message: "Invalid or expired OTP" });
+    }
+
+
+    user.otp = null;
+    user.otpExpiresAt = null;
+    await user.save();
+
+    // Generate JWT
+    const token = generateToken({ adminId: user._id, role: user.role });
+
+    res.status(200).json({
+        message: "OTP verified successfully",
+        result: {
+            _id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            phone: user.phone,
+            role: user.role,
+            token
+        }
+    });
+});
