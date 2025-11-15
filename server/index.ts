@@ -18,7 +18,7 @@ app.use(express.json())
 app.use(morgan("dev"))
 app.use(express.urlencoded({ extended: true }))
 const allowedOrigins = [
-    "http://localhost:5173", "https://new-task-fi.vercel.app", ,
+    "http://localhost:5173", "https://new-task-fi.vercel.app",
 ];
 app.use(cors({
     origin: (origin, callback) => {
@@ -59,7 +59,18 @@ const PORT = process.env.PORT || 5000
 // });
 
 
-mongoose.connect(process.env.MONGO_URL || "")
-    .then(() => console.log("MongoDB connected"))
-    .catch(err => console.error("MongoDB connection error:", err));
+mongoose
+    .connect(process.env.MONGO_URL || "")
+    .then(() => {
+        console.log("MongoDB connected");
 
+        server.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error("MongoDB connection error:", err);
+        process.exit(1);
+    });
+
+export default app;
