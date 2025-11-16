@@ -186,7 +186,7 @@ export const verifyOtp = asyncHandler(async (req: Request, res: Response, next: 
     user.otpExpiresAt = null;
     await user.save();
 
-    // Generate JWT
+
     const token = generateToken({ adminId: user._id, role: user.role });
 
     res.status(200).json({

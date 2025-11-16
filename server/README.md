@@ -4,8 +4,8 @@ A full-stack web application that displays products with multiple EMI plans back
 
 ## 🚀 Live Demo
 
-- **Frontend:** [Deployed on Vercel/Render]
-- **Backend API:** [Deployed on Render/Railway]
+- **Frontend:** [Deployed on Vercel]
+- **Backend API:** [Deployed on Vercel]
 
 ## 📹 Demo Video
 
@@ -86,12 +86,12 @@ pranav-aggarwal-task-gugao/
 ### Product Schema
 ```javascript
 {
-  name: String,           // Product name (e.g., "iPhone 15 Pro")
-  slug: String,           // URL-friendly identifier (e.g., "iphone-15-pro")
-  variant: String,        // Product variant (e.g., "256GB - Deep Purple")
-  mrp: Number,           // Maximum Retail Price
-  price: Number,         // Selling price
-  image: String,         // Product image URL
+  name: String,           
+  slug: String,          
+  variant: String,       
+  mrp: Number,           
+  price: Number,       
+  image: String,         
   createdAt: Date,
   updatedAt: Date
 }
@@ -100,11 +100,11 @@ pranav-aggarwal-task-gugao/
 ### EMI Plan Schema
 ```javascript
 {
-  productId: ObjectId,      // Reference to Product
-  monthlyPayment: Number,   // Monthly payment amount
-  tenure: Number,           // Duration in months
-  interestRate: Number,     // Interest rate percentage
-  cashback: String,         // Cashback offer (optional)
+  productId: ObjectId,      
+  monthlyPayment: Number,   
+  tenure: Number,          
+  interestRate: Number,     
+  cashback: String,        
   createdAt: Date,
   updatedAt: Date
 }
@@ -115,12 +115,12 @@ pranav-aggarwal-task-gugao/
 {
   firstName: String,
   lastName: String,
-  email: String,           // Unique
-  phone: Number,           // Unique
-  password: String,        // Hashed
-  profile: String,         // Profile image URL (optional)
-  role: String,           // "user"
-  status: String,         // "active" | "inactive"
+  email: String,           
+  phone: Number,           
+  password: String,       
+  profile: String,        
+  role: String,           
+  status: String,        
   sessionToken: String,
   createdAt: Date,
   updatedAt: Date
@@ -132,12 +132,12 @@ pranav-aggarwal-task-gugao/
 {
   firstName: String,
   lastName: String,
-  email: String,           // Unique
-  phone: Number,           // Unique
-  password: String,        // Hashed
-  profile: String,         // Profile image URL (optional)
-  role: String,           // "admin"
-  status: String,         // "active" | "inactive"
+  email: String,           
+  phone: Number,           
+  password: String,       
+  profile: String,        
+  role: String,           
+  status: String,         
   sessionToken: String,
   createdAt: Date,
   updatedAt: Date
@@ -436,17 +436,17 @@ The application comes with pre-populated data:
 
 ### Backend
 ```bash
-npm run dev          # Start development server with nodemon
-npm run seed         # Seed database with products and EMI plans
-npm run create-admin # Create default admin user
-npm run create-user  # Create default test user
+npm run dev          
+npm run seed        
+npm run create-admin 
+npm run create-user 
 ```
 
 ### Frontend
 ```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run preview      # Preview production build
+npm run dev          
+npm run build       
+npm run preview      
 ```
 
 ## 🌐 Routes
@@ -469,6 +469,10 @@ npm run preview      # Preview production build
 **Admin Routes:**
 - `/admin/login` - Admin login
 - `/admin/dashboard` - Admin dashboard
+
+**Admin login:**
+-Email:admin@example.com 
+-password:admin123
 
 ## 📱 Product URLs
 
@@ -518,7 +522,7 @@ All data is fetched from the backend API:
 
 ## 🚀 Deployment
 
-### Backend Deployment (Render/Railway)
+### Backend Deployment (Render)
 
 1. Create a new web service
 2. Connect your GitHub repository
