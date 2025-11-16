@@ -27,7 +27,7 @@ const UserLogin = () => {
             const result = await signInUser({ email, password }).unwrap();
             console.log("Login successful:", result);
             toast.success("Login successful!");
-            // Save user to Redux state
+
             dispatch(setUser({
                 _id: result.result._id,
                 name: result.result.firstName + " " + result.result.lastName,
