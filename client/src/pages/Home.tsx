@@ -194,14 +194,14 @@ const Home = () => {
             image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&q=80",
         },
     ];
-    const shoesBrands = [
-        { name: "Asian Shoes", emi: 285, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&q=80" },
-        { name: "LIBERTY", emi: 680, image: "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=300&q=80", color: "#dc2626" },
-        { name: "Sparx Shoes", emi: 343, image: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=300&q=80" },
-        { name: "Bersache Shoes", emi: 484, image: "https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=300&q=80" },
-        { name: "Neeman's Shoes", emi: 817, image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=300&q=80" },
-        { name: "Bacca Bucci Shoes", emi: 577, image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=300&q=80" },
-    ];
+    // const shoesBrands = [
+    //     { name: "Asian Shoes", emi: 285, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&q=80" },
+    //     { name: "LIBERTY", emi: 680, image: "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=300&q=80", color: "#dc2626" },
+    //     { name: "Sparx Shoes", emi: 343, image: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=300&q=80" },
+    //     { name: "Bersache Shoes", emi: 484, image: "https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=300&q=80" },
+    //     { name: "Neeman's Shoes", emi: 817, image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=300&q=80" },
+    //     { name: "Bacca Bucci Shoes", emi: 577, image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=300&q=80" },
+    // ];
     return (
         <div className="min-h-screen bg-white">
             <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
