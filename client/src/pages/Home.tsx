@@ -68,7 +68,7 @@ const Home = () => {
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentSlide((prev) => (prev + 1) % carouselSlides.length);
-        }, 5000); 
+        }, 5000);
         return () => clearInterval(timer);
     }, [carouselSlides.length]);
     const nextSlide = () => {
@@ -205,9 +205,9 @@ const Home = () => {
     return (
         <div className="min-h-screen bg-white">
             <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
-            {}
+            { }
             <section className="relative h-[450px] overflow-hidden">
-                {}
+                { }
                 <div className="relative h-full">
                     {carouselSlides.map((slide, index) => (
                         <div
@@ -222,7 +222,7 @@ const Home = () => {
                             <div className={`h-full bg-gradient-to-br ${slide.bgGradient} flex items-center`}>
                                 <div className="max-w-[1440px] mx-auto px-[60px] w-full">
                                     <div className="flex items-center relative z-10">
-                                        {}
+                                        { }
                                         <div className="w-1/2">
                                             <h1 className="text-[56px] leading-[1.1] font-bold text-white mb-4">
                                                 {slide.title}<br />
@@ -243,7 +243,7 @@ const Home = () => {
                                                 Shop on 0% EMI
                                             </Link>
                                         </div>
-                                        {}
+                                        { }
                                         <div className="absolute right-[60px] flex items-center gap-6">
                                             {slide.images.map((image, imgIdx) => (
                                                 <img
@@ -265,7 +265,7 @@ const Home = () => {
                         </div>
                     ))}
                 </div>
-                {}
+                { }
                 <button
                     onClick={prevSlide}
                     className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 flex items-center justify-center text-white transition-all duration-200"
@@ -280,7 +280,7 @@ const Home = () => {
                 >
                     <ChevronRight size={28} />
                 </button>
-                {}
+                { }
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
                     {carouselSlides.map((_, index) => (
                         <button
@@ -295,7 +295,7 @@ const Home = () => {
                     ))}
                 </div>
             </section>
-            {}
+            { }
             <section className="py-12 border-b border-[#e2e8f0]">
                 <div className="max-w-[1440px] mx-auto px-6">
                     <div className="bg-white border border-[#e2e8f0] rounded-xl p-6">
@@ -316,33 +316,33 @@ const Home = () => {
                                     className="group bg-white border border-[#e2e8f0] rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.12)] hover:scale-[1.03] transition-all duration-300 cursor-pointer"
                                     style={{ width: "300px" }}
                                 >
-                                    {}
+                                    { }
                                     <div className="relative h-[150px] bg-[#f7fafc] overflow-hidden">
                                         <img
                                             src={product.image}
                                             alt={product.name}
                                             className="w-full h-full object-cover"
                                         />
-                                        {}
+                                        { }
                                         <div className="absolute top-3 left-3 bg-[#9ACD32] text-[#1a1a2e] text-xs font-bold px-2.5 py-1.5 rounded flex items-center gap-1 z-10">
                                             <Zap size={12} />
                                             0% EMI
                                         </div>
                                     </div>
-                                    {}
+                                    { }
                                     <div className="p-4">
-                                        {}
+                                        { }
                                         <div className="flex items-baseline gap-1 mb-2">
                                             <span className="text-2xl font-bold text-[#2d3748]">
                                                 ₹{product.emi}
                                             </span>
                                             <span className="text-base font-medium text-[#718096]">/month</span>
                                         </div>
-                                        {}
+                                        { }
                                         <h3 className="text-sm font-medium text-[#4a5568] leading-[1.4] mb-3 min-h-[40px] line-clamp-2">
                                             {product.name}
                                         </h3>
-                                        {}
+                                        { }
                                         <div className="flex items-center gap-2 flex-wrap">
                                             <span className="text-sm font-medium text-[#a0aec0] line-through">
                                                 ₹{product.mrp.toLocaleString("en-IN")}
@@ -361,7 +361,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-            {}
+            { }
             <section className="py-12 border-b border-[#e2e8f0]">
                 <div className="max-w-[1440px] mx-auto px-6">
                     <div className="flex justify-between items-center mb-6">
@@ -377,21 +377,21 @@ const Home = () => {
                                 className="group bg-white border border-[#e2e8f0] rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.12)] hover:scale-[1.03] transition-all duration-300 cursor-pointer"
                                 style={{ width: "300px" }}
                             >
-                                {}
+                                { }
                                 <div className="relative h-[150px] bg-[#f7fafc] overflow-hidden">
                                     <img
                                         src={deal.image}
                                         alt={deal.name}
                                         className="w-full h-full object-cover"
                                     />
-                                    {}
+                                    { }
                                     <div className="absolute top-3 right-3 bg-[#ef4444] text-white text-xs font-bold px-2 py-1 rounded z-10">
                                         Deal of the Day
                                     </div>
                                 </div>
-                                {}
+                                { }
                                 <div className="p-4">
-                                    {}
+                                    { }
                                     <div className="bg-[#9ACD32]/20 rounded-lg p-3 mb-3">
                                         <p className="text-xs text-[#718096] mb-1">Pay Now</p>
                                         <div className="flex items-baseline gap-2">
@@ -399,11 +399,11 @@ const Home = () => {
                                             <span className="text-sm text-[#718096]">+ ₹{deal.emi}/mo</span>
                                         </div>
                                     </div>
-                                    {}
+                                    { }
                                     <h3 className="text-sm font-medium text-[#4a5568] leading-[1.4] mb-2 min-h-[40px] line-clamp-2">
                                         {deal.name}
                                     </h3>
-                                    {}
+                                    { }
                                     <div className="flex items-center gap-2 flex-wrap">
                                         <span className="text-sm font-medium text-[#a0aec0] line-through">
                                             ₹{deal.mrp.toLocaleString("en-IN")}
@@ -421,7 +421,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-            {}
+            { }
             <section className="py-12 border-b border-[#e2e8f0]">
                 <div className="max-w-[1440px] mx-auto px-6">
                     <h2 className="text-[28px] font-bold text-[#2d3748] tracking-tight mb-6">Pay with 0% EMI</h2>
@@ -433,7 +433,7 @@ const Home = () => {
                                 className="group bg-white border border-[#e2e8f0] rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.12)] hover:scale-[1.03] transition-all duration-300 cursor-pointer"
                                 style={{ width: "280px" }}
                             >
-                                {}
+                                { }
                                 <div className="relative h-[240px] bg-[#f7fafc] overflow-hidden">
                                     <img
                                         src={brand.image}
@@ -441,7 +441,7 @@ const Home = () => {
                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-400"
                                     />
                                 </div>
-                                {}
+                                { }
                                 <div className="p-4">
                                     <div className="flex items-baseline gap-1 mb-2">
                                         <span className="text-2xl font-bold text-[#2d3748]">
@@ -471,43 +471,10 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-            {}
-            {}
-            {}
-            <section className="py-12 border-b border-[#e2e8f0]">
-                <div className="max-w-[1440px] mx-auto px-6">
-                    <h2 className="text-[28px] font-bold text-[#2d3748] tracking-tight mb-6">Trending Fashion Brands</h2>
-                    <div className="overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-[#008080] scrollbar-track-[#e2e8f0]">
-                        <div className="flex gap-5">
-                            {shoesBrands.map((brand, idx) => (
-                                <Link
-                                    key={idx}
-                                    to="/products"
-                                    className="flex-shrink-0 w-[200px] h-[280px] bg-white border border-[#e2e8f0] rounded-xl p-4 flex flex-col items-center justify-between hover:shadow-lg transition-shadow"
-                                >
-                                    <img
-                                        src={brand.image}
-                                        alt={brand.name}
-                                        className="w-full h-[180px] object-contain mb-4"
-                                    />
-                                    <div className="w-full text-center">
-                                        <h3
-                                            className="text-2xl font-bold tracking-wider mb-1"
-                                            style={{ color: brand.color || "#2d3748" }}
-                                        >
-                                            {brand.name}
-                                        </h3>
-                                        <p className="text-xs text-[#718096] mb-1">Starting</p>
-                                        <p className="text-lg font-bold text-[#2d3748]">
-                                            ₹{brand.emi}/mon
-                                        </p>
-                                    </div>
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>  {}
+            { }
+            { }
+            { }
+            { }
             <section className="py-12 border-b border-[#e2e8f0]">
                 <div className="max-w-[1440px] mx-auto px-6">
                     <div className="bg-white border border-[#e2e8f0] rounded-xl p-6">
@@ -528,33 +495,33 @@ const Home = () => {
                                     className="group bg-white border border-[#e2e8f0] rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.12)] hover:scale-[1.03] transition-all duration-300 cursor-pointer"
                                     style={{ width: "300px" }}
                                 >
-                                    {}
+                                    { }
                                     <div className="relative h-[150px] bg-[#f7fafc] overflow-hidden">
                                         <img
                                             src={product.image}
                                             alt={product.name}
                                             className="w-full h-full object-cover"
                                         />
-                                        {}
+                                        { }
                                         <div className="absolute top-3 left-3 bg-[#9ACD32] text-[#1a1a2e] text-xs font-bold px-2.5 py-1.5 rounded flex items-center gap-1 z-10">
                                             <Zap size={12} />
                                             0% EMI
                                         </div>
                                     </div>
-                                    {}
+                                    { }
                                     <div className="p-4">
-                                        {}
+                                        { }
                                         <div className="flex items-baseline gap-1 mb-2">
                                             <span className="text-2xl font-bold text-[#2d3748]">
                                                 ₹{product.emi}
                                             </span>
                                             <span className="text-base font-medium text-[#718096]">/month</span>
                                         </div>
-                                        {}
+                                        { }
                                         <h3 className="text-sm font-medium text-[#4a5568] leading-[1.4] mb-3 min-h-[40px] line-clamp-2">
                                             {product.name}
                                         </h3>
-                                        {}
+                                        { }
                                         <div className="flex items-center gap-2 flex-wrap">
                                             <span className="text-sm font-medium text-[#a0aec0] line-through">
                                                 ₹{product.mrp.toLocaleString("en-IN")}
